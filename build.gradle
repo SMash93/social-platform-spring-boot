@@ -48,6 +48,7 @@ dependencies {
     testCompile("de.flapdoodle.embed:de.flapdoodle.embed.mongo")
     // end::test-3[]
     // tag::test-4[]
-    testCompile("org.seleniumhq.selenium:selenium-java")
+    compile("org.seleniumhq.selenium:htmlunit-driver")
+    compile("org.seleniumhq.selenium:selenium-java")
     // end::test-4[]
 }
