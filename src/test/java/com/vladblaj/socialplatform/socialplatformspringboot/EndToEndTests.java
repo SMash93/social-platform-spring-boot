@@ -6,10 +6,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeDriverService;
-import org.openqa.selenium.interactions.Actions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
@@ -23,7 +21,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.openqa.selenium.chrome.ChromeDriverService.createDefaultService;
 
 @RunWith(SpringRunner.class)
@@ -55,32 +52,39 @@ public class EndToEndTests {
         service.stop();
     }
 
+    private String pathToQuestions = "F:\\Teste OCA\\Objective-Wise\\Lambda Expressions\\Questions\\";
+    private String pathToAnswers = "F:\\Teste OCA\\Objective-Wise\\Lambda Expressions\\Answers\\";
+
     @Test
     public void homePageShouldWork() throws IOException {
+        int questionNumber = 1;
+        driver.get("http://webets-server-aws.enthuware.com/webets.html");
+        driver.findElement(By.cssSelector("input#login-username")).sendKeys("lorena.pojar@msg.group");
+        driver.findElement(By.cssSelector("input#login-password")).sendKeys("180806");
+        driver.findElement(By.xpath("//button[contains(., 'Login')]")).click();
 
-        driver.get("http://localhost:" + port);
+        //wait for me
+        while (questionNumber <= 5) {
+            saveQuestion(questionNumber);
+            navigateToNextPage();
+            questionNumber++;
+        }
 
-        takeScreenshot("homePageShouldWork-1");
-
-        assertThat(driver.getTitle())
-                .isEqualTo("Learning Spring Boot: Spring-a-Gram");
-
-        String pageContent = driver.getPageSource();
-
-        assertThat(pageContent)
-                .contains("<a href=\"/images/bazinga.png/raw\">");
-        WebElement element = driver.findElement(
-                By.cssSelector("a[href*=\"bazinga.png\"]"));
-        Actions actions = new Actions(driver);
-        actions.moveToElement(element).click().perform();
-
-        takeScreenshot("homePageShouldWork-2");
-        driver.navigate().back();
     }
 
-    private void takeScreenshot(String name) throws IOException {
+    private void navigateToNextPage() {
+        driver.findElement(By.xpath("//button[contains(., 'Next')]")).click();
+    }
+
+    private void takeScreenshot(String path, int questionNumber) throws IOException {
         FileCopyUtils.copy(
                 driver.getScreenshotAs(OutputType.FILE),
-                new File("build/test-results/TEST-" + name + ".png"));
+                new File(path + "Question-" + questionNumber + ".png"));
+    }
+
+    private void saveQuestion(int questionNumber) throws IOException {
+        takeScreenshot(pathToQuestions, questionNumber);
+        driver.findElement(By.xpath("//button[contains(., 'Evaluate')]")).click();
+        takeScreenshot(pathToAnswers, questionNumber);
     }
 }

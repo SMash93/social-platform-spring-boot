@@ -11,6 +11,12 @@ buildscript {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
     }
 }
+plugins {
+	// tag::gradle-git[]
+	id "com.vladblaj.gradle-git-properties" version "1.4.17"
+	// end::gradle-git[]
+	// end::gradle-git[]
+}
 
 apply plugin: 'java'
 apply plugin: 'eclipse'
@@ -34,10 +40,11 @@ repositories {
 dependencies {
     compile('org.springframework.boot:spring-boot-starter-webflux')
     compile('org.synchronoss.cloud:nio-multipart-parser')
+    compile('org.springframework.boot:spring-boot-starter-actuator')
     compile('org.springframework.boot:spring-boot-starter-data-mongodb-reactive')
     compile("org.springframework.boot:spring-boot-starter-thymeleaf")
     compile('org.projectlombok:lombok')
-
+    compile("org.springframework.boot:spring-boot-devtools") 
     // tag::test-1[]
     testCompile('org.springframework.boot:spring-boot-starter-test')
     // end::test-1[]
@@ -45,7 +52,7 @@ dependencies {
     testCompile("io.projectreactor:reactor-test")
     // end::test-2[]
     // tag::test-3[]
-    testCompile("de.flapdoodle.embed:de.flapdoodle.embed.mongo")
+    compile("de.flapdoodle.embed:de.flapdoodle.embed.mongo")
     // end::test-3[]
     // tag::test-4[]
     compile("org.seleniumhq.selenium:htmlunit-driver")
