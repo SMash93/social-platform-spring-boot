@@ -10,10 +10,12 @@ buildscript {
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
     }
+
 }
+
+
 plugins {
 	// tag::gradle-git[]
-	id "com.vladblaj.gradle-git-properties" version "1.4.17"
 	// end::gradle-git[]
 	// end::gradle-git[]
 }
@@ -30,20 +32,26 @@ jar {
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
+
 repositories {
     mavenCentral()
     maven { url "https://repo.spring.io/snapshot" }
     maven { url "https://repo.spring.io/milestone" }
     maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
 }
-
+bootJar {
+    excludeDevtools = false
+}
 dependencies {
+
     compile('org.springframework.boot:spring-boot-starter-webflux')
     compile('org.synchronoss.cloud:nio-multipart-parser')
     compile('org.springframework.boot:spring-boot-starter-actuator')
     compile('org.springframework.boot:spring-boot-starter-data-mongodb-reactive')
     compile("org.springframework.boot:spring-boot-starter-thymeleaf")
-    compile('org.projectlombok:lombok')
+    // https://projectlombok.org
+    compileOnly 'org.projectlombok:lombok:1.18.4'
+    annotationProcessor 'org.projectlombok:lombok:1.18.4'
     compile("org.springframework.boot:spring-boot-devtools") 
     // tag::test-1[]
     testCompile('org.springframework.boot:spring-boot-starter-test')
@@ -51,7 +59,7 @@ dependencies {
     // tag::test-2[]
     testCompile("io.projectreactor:reactor-test")
     // end::test-2[]
-    // tag::test-3[]
+    // tag::test-3[]a compileOnly("org.springframework.boot:spring-boot-devtools")
     compile("de.flapdoodle.embed:de.flapdoodle.embed.mongo")
     // end::test-3[]
     // tag::test-4[]

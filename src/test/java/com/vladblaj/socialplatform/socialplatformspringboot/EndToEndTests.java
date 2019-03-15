@@ -6,8 +6,10 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeDriverService;
+import org.openqa.selenium.interactions.Actions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
@@ -21,6 +23,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.openqa.selenium.chrome.ChromeDriverService.createDefaultService;
 
 @RunWith(SpringRunner.class)
@@ -56,35 +59,35 @@ public class EndToEndTests {
     private String pathToAnswers = "F:\\Teste OCA\\Objective-Wise\\Lambda Expressions\\Answers\\";
 
     @Test
+
     public void homePageShouldWork() throws IOException {
-        int questionNumber = 1;
-        driver.get("http://webets-server-aws.enthuware.com/webets.html");
-        driver.findElement(By.cssSelector("input#login-username")).sendKeys("lorena.pojar@msg.group");
-        driver.findElement(By.cssSelector("input#login-password")).sendKeys("180806");
-        driver.findElement(By.xpath("//button[contains(., 'Login')]")).click();
 
-        //wait for me
-        while (questionNumber <= 5) {
-            saveQuestion(questionNumber);
-            navigateToNextPage();
-            questionNumber++;
-        }
+        driver.get("http://localhost:" + port);
 
-    }
 
-    private void navigateToNextPage() {
-        driver.findElement(By.xpath("//button[contains(., 'Next')]")).click();
-    }
+        assertThat(driver.getTitle())
 
-    private void takeScreenshot(String path, int questionNumber) throws IOException {
-        FileCopyUtils.copy(
-                driver.getScreenshotAs(OutputType.FILE),
-                new File(path + "Question-" + questionNumber + ".png"));
-    }
+                .isEqualTo("Learning Spring Boot: Spring-a-Gram");
 
-    private void saveQuestion(int questionNumber) throws IOException {
-        takeScreenshot(pathToQuestions, questionNumber);
-        driver.findElement(By.xpath("//button[contains(., 'Evaluate')]")).click();
-        takeScreenshot(pathToAnswers, questionNumber);
+
+        String pageContent = driver.getPageSource();
+
+
+        assertThat(pageContent)
+
+                .contains("<a href=\"/images/bazinga.png/raw\">");
+
+
+        WebElement element = driver.findElement(
+
+                By.cssSelector("a[href*=\"bazinga.png\"]"));
+
+        Actions actions = new Actions(driver);
+
+        actions.moveToElement(element).click().perform();
+
+
+        driver.navigate().back();
+
     }
 }

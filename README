@@ -1,0 +1,26 @@
+CloudFoundry
+    Login
+        cf login -a api.run.pivotal.io
+    Push Fat Jar
+        cf push socialplatform -p build\libs\social-platform-spring-boot.jar
+
+
+
+Mongo DB
+mongod --dbpath "D:\Kitsuri\MongoDB\data" --logpath "D:\Kitsuri\MongoDB\log\mongod.log"
+mongod.exe --config mongod.cfg
+
+Gradle
+    -Include devtools for remote connection
+        bootJar {
+            excludeDevtools = false
+        }
+    -Build fat jar
+        gradlew clean build
+
+
+Run the JAR
+    java -jar build/libs/social-platform-spring-boot.jar
+
+Make Project
+    Ctrl+shift+f9
