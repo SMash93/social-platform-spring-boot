@@ -1,5 +1,6 @@
 package com.vladblaj.socialplatform.socialplatformspringboot;
 
+import com.vladblaj.socialplatform.socialplatformspringboot.images.Image;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;

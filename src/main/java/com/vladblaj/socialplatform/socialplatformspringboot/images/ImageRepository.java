@@ -1,4 +1,4 @@
-package com.vladblaj.socialplatform.socialplatformspringboot;
+package com.vladblaj.socialplatform.socialplatformspringboot.images;
 
 import org.springframework.data.repository.reactive.ReactiveCrudRepository;
 import reactor.core.publisher.Mono;

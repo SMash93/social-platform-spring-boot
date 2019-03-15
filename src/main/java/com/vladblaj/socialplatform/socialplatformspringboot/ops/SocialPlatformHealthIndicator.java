@@ -1,4 +1,4 @@
-package com.vladblaj.socialplatform.socialplatformspringboot;
+package com.vladblaj.socialplatform.socialplatformspringboot.ops;
 
 import org.springframework.boot.actuate.health.Health;
 import org.springframework.boot.actuate.health.HealthIndicator;

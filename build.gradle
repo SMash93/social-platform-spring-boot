@@ -60,10 +60,11 @@ dependencies {
     testCompile("io.projectreactor:reactor-test")
     // end::test-2[]
     // tag::test-3[]a compileOnly("org.springframework.boot:spring-boot-devtools")
-    compile("de.flapdoodle.embed:de.flapdoodle.embed.mongo")
+   // compile("de.flapdoodle.embed:de.flapdoodle.embed.mongo")
     // end::test-3[]
     // tag::test-4[]
     compile("org.seleniumhq.selenium:htmlunit-driver")
     compile("org.seleniumhq.selenium:selenium-java")
+    compile('org.springframework.boot:spring-boot-starter-amqp')
     // end::test-4[]
 }

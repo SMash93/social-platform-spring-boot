@@ -1,4 +1,4 @@
-package com.vladblaj.socialplatform.socialplatformspringboot;
+package com.vladblaj.socialplatform.socialplatformspringboot.images;
 
 import lombok.Data;
 import org.springframework.data.annotation.Id;

@@ -1,5 +1,7 @@
 package com.vladblaj.socialplatform.socialplatformspringboot;
 
+import com.vladblaj.socialplatform.socialplatformspringboot.images.Image;
+import com.vladblaj.socialplatform.socialplatformspringboot.images.ImageRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

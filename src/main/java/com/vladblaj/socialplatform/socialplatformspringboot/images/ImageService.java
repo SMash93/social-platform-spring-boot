@@ -1,5 +1,7 @@
-package com.vladblaj.socialplatform.socialplatformspringboot;
+package com.vladblaj.socialplatform.socialplatformspringboot.images;
 
+import com.vladblaj.socialplatform.socialplatformspringboot.images.Image;
+import com.vladblaj.socialplatform.socialplatformspringboot.images.ImageRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.io.Resource;

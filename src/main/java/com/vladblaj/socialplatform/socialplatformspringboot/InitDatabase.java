@@ -1,5 +1,6 @@
 package com.vladblaj.socialplatform.socialplatformspringboot;
 
+import com.vladblaj.socialplatform.socialplatformspringboot.images.Image;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.mongodb.core.MongoOperations;
