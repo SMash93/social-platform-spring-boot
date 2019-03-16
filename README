@@ -24,3 +24,7 @@ Run the JAR
 
 Make Project
     Ctrl+shift+f9
+
+Metrics
+    http://localhost:8080/application/metrics/comments.consumed
+    http://localhost:8080/application/metrics/comments.produced

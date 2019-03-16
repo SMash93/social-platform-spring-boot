@@ -1,6 +1,6 @@
 package com.vladblaj.socialplatform.socialplatformspringboot;
 
-import com.vladblaj.socialplatform.socialplatformspringboot.comments.Comment;
+import com.vladblaj.socialplatform.socialplatformspringboot.images.Comment;
 import com.vladblaj.socialplatform.socialplatformspringboot.images.CommentReaderRepository;
 import com.vladblaj.socialplatform.socialplatformspringboot.images.Image;
 import com.vladblaj.socialplatform.socialplatformspringboot.images.ImageService;
