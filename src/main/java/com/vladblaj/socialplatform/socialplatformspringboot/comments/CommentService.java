@@ -7,48 +7,52 @@ import org.springframework.amqp.rabbit.annotation.QueueBinding;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.cloud.stream.annotation.EnableBinding;
+import org.springframework.cloud.stream.annotation.Input;
+import org.springframework.cloud.stream.annotation.Output;
+import org.springframework.cloud.stream.annotation.StreamListener;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 
 @Service
+@EnableBinding(CustomProcessor.class)
 public class CommentService {
+    // end::stream-1[]
 
-    private CommentWriterRepository repository;
-    private MeterRegistry meterRegistry;
+    private final CommentWriterRepository repository;
 
-    public CommentService(CommentWriterRepository repository, MeterRegistry meterRegistry) {
+    private final MeterRegistry meterRegistry;
+
+    public CommentService(CommentWriterRepository repository,
+                          MeterRegistry meterRegistry) {
         this.repository = repository;
         this.meterRegistry = meterRegistry;
     }
 
-    @RabbitListener(bindings = @QueueBinding(
-            value = @Queue,
-            exchange = @Exchange(value = "learning-spring-boot"),
-            key = "comments.new"
-    ))
-    public void save(Comment newComment) {
-        repository
-                .save(newComment)
-                .log("commentService-save")
-                .subscribe(comment -> {
+    // tag::stream-2[]
+    @StreamListener
+    @Output(CustomProcessor.OUTPUT)
+    public Flux<Void> save(@Input(CustomProcessor.INPUT)
+                                   Flux<Comment> newComments) {
+        return repository
+                .saveAll(newComments)
+                .flatMap(comment -> {
                     meterRegistry
                             .counter("comments.consumed", "imageId", comment.getImageId())
                             .increment();
+                    return Mono.empty();
                 });
-
     }
+    // end::stream-2[]
 
     @Bean
-    Jackson2JsonMessageConverter jackson2JsonMessageConverter() {
-        return new Jackson2JsonMessageConverter();
-    }
-
-    @Bean
-    CommandLineRunner setUp(MongoOperations operations) {
+    CommandLineRunner setUp(CommentWriterRepository repository) {
         return args -> {
-            operations.dropCollection(Comment.class);
+            repository.deleteAll().subscribe();
         };
     }
 

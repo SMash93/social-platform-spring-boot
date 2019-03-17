@@ -2,6 +2,7 @@ package com.vladblaj.socialplatform.socialplatformspringboot;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.By;
@@ -29,6 +30,7 @@ import static org.openqa.selenium.chrome.ChromeDriverService.createDefaultServic
 @RunWith(SpringRunner.class)
 @SpringBootTest(
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@Ignore
 public class EndToEndTests {
     static ChromeDriverService service;
     static ChromeDriver driver;
